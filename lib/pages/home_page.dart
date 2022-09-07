@@ -1,5 +1,6 @@
 import 'package:financas_pessoais/pages/categorias_lista_page.dart';
 import 'package:financas_pessoais/pages/dashboard_page.dart';
+import 'package:financas_pessoais/pages/objetivos_lista_page.dart';
 import 'package:financas_pessoais/pages/transacoes_lista_page.dart';
 import 'package:flutter/material.dart';
 
@@ -30,6 +31,7 @@ class _HomePageState extends State<HomePage> {
           DashBoardPage(),
           TransacoesListaPage(),
           CategoriasListaPage(),
+          ObjetivosListaPage()
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -42,6 +44,8 @@ class _HomePageState extends State<HomePage> {
               icon: Icon(Icons.swap_horiz), label: 'Transações'),
           BottomNavigationBarItem(
               icon: Icon(Icons.view_list), label: 'Categorias'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.show_chart_rounded), label: 'Objetivos')
         ],
         onTap: (pagina) {
           pc.animateToPage(
