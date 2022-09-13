@@ -107,7 +107,7 @@ class DatabaseManager {
       dataLimite INTEGER,
       fraseMotivacao TEXT,
       imagem TEXT, 
-      tipo INTEGER
+      tipo INTEGER,
     );
   ''';
 }

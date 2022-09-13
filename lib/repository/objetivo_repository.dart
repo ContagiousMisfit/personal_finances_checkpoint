@@ -1,10 +1,6 @@
 import 'package:financas_pessoais/database/database_manager.dart';
 import 'package:financas_pessoais/models/objetivo.dart';
-import 'package:financas_pessoais/models/tipo_lancamento.dart';
 import 'package:financas_pessoais/models/tipo_objetivo.dart';
-import 'package:financas_pessoais/models/transacao.dart';
-
-import '../models/categorial.dart';
 
 class ObjetivoRepository {
   Future<List<Objetivo>> listarObjetivos() async {

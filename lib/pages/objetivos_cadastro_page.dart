@@ -1,15 +1,10 @@
 import 'package:financas_pessoais/models/objetivo.dart';
-import 'package:financas_pessoais/models/tipo_lancamento.dart';
 import 'package:financas_pessoais/models/tipo_objetivo.dart';
-import 'package:financas_pessoais/models/transacao.dart';
-import 'package:financas_pessoais/repository/categoria_repository.dart';
 import 'package:financas_pessoais/repository/objetivo_repository.dart';
-import 'package:financas_pessoais/repository/transacao_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:intl/intl.dart';
 
-import '../models/categorial.dart';
 
 class ObjetivosCadastroPage extends StatefulWidget {
   const ObjetivosCadastroPage({Key? key}) : super(key: key);
@@ -26,7 +21,7 @@ class _ObjetivosCadastroPageState extends State<ObjetivosCadastroPage> {
       decimalSeparator: ',', thousandSeparator: '.', leftSymbol: 'R\$');
   final _dataLimiteController = TextEditingController();
   final _fraseMotivacaoController = TextEditingController();
-  TipoObjetivo tipoObjetivoSelecionado = TipoObjetivo.viagem;
+  TipoObjetivo? tipoObjetivoSelecionado;
 
 
   @override
@@ -49,6 +44,8 @@ class _ObjetivosCadastroPageState extends State<ObjetivosCadastroPage> {
             child: Column(
               children: [
                 _buildNome(),
+                const SizedBox(height: 20),
+                _buildTipo(),
                 const SizedBox(height: 20),
                 _buildValor(),
                 const SizedBox(height: 20),
@@ -90,8 +87,8 @@ class _ObjetivosCadastroPageState extends State<ObjetivosCadastroPage> {
               valorNecessario: valorNecessario,
               dataLimite: data,
               fraseMotivacao: fraseMotivacao,
-              imagem: tipoObjetivoSelecionado.name,
-              tipo: tipoObjetivoSelecionado,
+              imagem: tipoObjetivoSelecionado!.name,
+              tipo: tipoObjetivoSelecionado!,
             );
 
             await _objetivoRepository.planejarObjetivo(objetivo);
@@ -127,21 +124,34 @@ class _ObjetivosCadastroPageState extends State<ObjetivosCadastroPage> {
     );
   }
 
-/*DropdownButtonFormField _buildTipoObjetivo() {
-  return DropdownButtonFormField<TipoObjetivo>(
-    value: tipoObjetivoSelecionado,
-    onChanged: (TipoObjetivo objetivo) {
-      setState(() {
-        tipoObjetivoSelecionado = objetivo;
-      });
-    },
-    items: TipoObjetivo.values.map((TipoObjetivo classType) {
-      return DropdownMenuItem<TipoObjetivo>(
-        value: tipoObjetivoSelecionado,
-        child: Text(classType.toString()));
-    }).toList();
-);
-}*/
+    DropdownButtonFormField _buildTipo() {
+    return DropdownButtonFormField<TipoObjetivo>(
+      value: tipoObjetivoSelecionado,
+      items: TipoObjetivo.values.map((tipo) {
+        return DropdownMenuItem<TipoObjetivo>(
+          value: tipo,
+          child: Text(tipo.toString()),
+        );
+      }).toList(),
+      onChanged: (TipoObjetivo? tipoObjetivo) {
+        setState(() {
+          tipoObjetivoSelecionado = tipoObjetivo;
+        });
+      },
+      decoration: const InputDecoration(
+        hintText: 'Selecione o tipo de Objetivo',
+        labelText: 'Categoria',
+        border: OutlineInputBorder(),
+        prefixIcon: Icon(Icons.email),
+      ),
+      validator: (value) {
+        if (value == null) {
+          return 'Informe um tipo de objetivo';
+        }
+        return null;
+      },
+    );
+  }
 
   TextFormField _buildValor() {
     return TextFormField(
@@ -207,37 +217,6 @@ class _ObjetivosCadastroPageState extends State<ObjetivosCadastroPage> {
       },
     );
   }
-
-  /*DropdownButtonFormField _buildCategoria() {
-    return DropdownButtonFormField<Categoria>(
-      value: _categoriaSelecionada,
-      items: _categorias.map((c) {
-        return DropdownMenuItem<Categoria>(
-          value: c,
-          child: Text(c.categoriaDescricao),
-        );
-      }).toList(),
-      onChanged: (Categoria? categoria) {
-        setState(() {
-          _categoriaSelecionada = categoria;
-        });
-      },
-      decoration: const InputDecoration(
-        hintText: 'Selecione  a categoria',
-        labelText: 'Categoria',
-        border: OutlineInputBorder(),
-        prefixIcon: Icon(Icons.email),
-      ),
-      validator: (value) {
-        if (value == null) {
-          return 'Informe uma Categoria';
-        }
-        return null;
-      },
-    );
-  }*/
-
-
 
   TextFormField _buildFraseMotivacao() {
     return TextFormField(
