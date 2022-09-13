@@ -140,9 +140,9 @@ class _ObjetivosCadastroPageState extends State<ObjetivosCadastroPage> {
       },
       decoration: const InputDecoration(
         hintText: 'Selecione o tipo de Objetivo',
-        labelText: 'Categoria',
+        labelText: 'Objetivo',
         border: OutlineInputBorder(),
-        prefixIcon: Icon(Icons.email),
+        prefixIcon: Icon(Icons.tag_rounded),
       ),
       validator: (value) {
         if (value == null) {
