@@ -2,6 +2,7 @@ import 'package:financas_pessoais/pages/home_page.dart';
 import 'package:financas_pessoais/pages/objetivos_cadastro_page.dart';
 import 'package:financas_pessoais/pages/transacao_cadastro_page.dart';
 import 'package:financas_pessoais/pages/transacao_detalhes_page.dart';
+import 'package:financas_pessoais/pages/objetivo_detalhes_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,13 +19,14 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        fontFamily: 'Montserrat'
       ),
       routes: {
         '/': (context) => const HomePage(),
         '/transacao-detalhes': (context) => const TransacaoDetalhesPage(),
         '/transacao-cadastro': (context) => const TransacaoCadastroPage(),
         '/objetivos-cadastro': (context) => const ObjetivosCadastroPage(),
+        '/objetivo-detalhes': (context) => const ObjetivoDetalhesPage()
       },
       initialRoute: '/',
     );

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:intl/intl.dart';
 
-
 class ObjetivosCadastroPage extends StatefulWidget {
   const ObjetivosCadastroPage({Key? key}) : super(key: key);
 
@@ -23,7 +22,6 @@ class _ObjetivosCadastroPageState extends State<ObjetivosCadastroPage> {
   final _fraseMotivacaoController = TextEditingController();
   TipoObjetivo? tipoObjetivoSelecionado;
 
-
   @override
   void initState() {
     super.initState();
@@ -34,13 +32,14 @@ class _ObjetivosCadastroPageState extends State<ObjetivosCadastroPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color.fromARGB(255, 12, 36, 49),
         title: const Text('Traçar novo objetivo'),
       ),
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(33),
             child: Column(
               children: [
                 _buildNome(),
@@ -66,6 +65,10 @@ class _ObjetivosCadastroPageState extends State<ObjetivosCadastroPage> {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Color.fromARGB(255, 12, 36, 49), // background
+          onPrimary: Colors.white, // foreground
+        ),
         child: const Padding(
           padding: EdgeInsets.all(10.0),
           child: Text('Cadastrar'),
@@ -73,14 +76,14 @@ class _ObjetivosCadastroPageState extends State<ObjetivosCadastroPage> {
         onPressed: () async {
           final isValid = _formKey.currentState!.validate();
           if (isValid) {
-            final nome = _nomeController.text;            
-            final data = DateFormat('dd/MM/yyyy').parse(_dataLimiteController.text);
-            final valorNecessario= NumberFormat.currency(locale: 'pt_BR')
+            final nome = _nomeController.text;
+            final data =
+                DateFormat('dd/MM/yyyy').parse(_dataLimiteController.text);
+            final valorNecessario = NumberFormat.currency(locale: 'pt_BR')
                 .parse(_valorNecessarioController.text.replaceAll('R\$', ''))
                 .toDouble();
             var fraseMotivacao = _fraseMotivacaoController.text;
             var tipo = tipoObjetivoSelecionado;
-
 
             final objetivo = Objetivo(
               nome: nome,
@@ -93,7 +96,7 @@ class _ObjetivosCadastroPageState extends State<ObjetivosCadastroPage> {
 
             await _objetivoRepository.planejarObjetivo(objetivo);
 
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                 content: Text('Objetivo traçado com sucesso. Keep it up!')));
 
             Navigator.of(context).pop(true);
@@ -124,13 +127,13 @@ class _ObjetivosCadastroPageState extends State<ObjetivosCadastroPage> {
     );
   }
 
-    DropdownButtonFormField _buildTipo() {
+  DropdownButtonFormField _buildTipo() {
     return DropdownButtonFormField<TipoObjetivo>(
       value: tipoObjetivoSelecionado,
       items: TipoObjetivo.values.map((tipo) {
         return DropdownMenuItem<TipoObjetivo>(
           value: tipo,
-          child: Text(tipo.toString()),
+          child: Text(tipo.name.toString()),
         );
       }).toList(),
       onChanged: (TipoObjetivo? tipoObjetivo) {
@@ -178,7 +181,7 @@ class _ObjetivosCadastroPageState extends State<ObjetivosCadastroPage> {
     );
   }
 
-    TextFormField _buildData() {
+  TextFormField _buildData() {
     return TextFormField(
       controller: _dataLimiteController,
       decoration: const InputDecoration(
@@ -222,7 +225,8 @@ class _ObjetivosCadastroPageState extends State<ObjetivosCadastroPage> {
     return TextFormField(
       controller: _fraseMotivacaoController,
       decoration: const InputDecoration(
-        hintText: '"Todos os nossos sonhos podem-se realizar, se tivermos a coragem de persegui-los. \n(Walt Disney)"',
+        hintText:
+            '"Todos os nossos sonhos podem-se realizar, se tivermos a coragem de persegui-los. \n(Walt Disney)"',
         labelText: 'Motivação',
         border: OutlineInputBorder(),
       ),
@@ -230,6 +234,4 @@ class _ObjetivosCadastroPageState extends State<ObjetivosCadastroPage> {
       maxLines: 3,
     );
   }
-
-  
 }

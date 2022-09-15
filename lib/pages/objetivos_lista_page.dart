@@ -27,7 +27,7 @@ class _ObjetivosListaPageState extends State<ObjetivosListaPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Objetivos')),
+      appBar: AppBar(backgroundColor: Color.fromARGB(255, 12, 36, 49), title: const Text('Objetivos')),
       body: FutureBuilder<List<Objetivo>>(
         future: _futureObjetivos,
         builder: (context, snapshot) {
@@ -43,7 +43,7 @@ class _ObjetivosListaPageState extends State<ObjetivosListaPage> {
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: NetworkImage(
-                        'https://images.unsplash.com/photo-1561324555-88df4bfae809?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80'),
+                        'https://images.unsplash.com/photo-1545132147-d037e6c54cfd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80'),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -54,16 +54,19 @@ class _ObjetivosListaPageState extends State<ObjetivosListaPage> {
                     padding: EdgeInsets.all(20),
                     child: Text("Metas",
                         style: TextStyle(
-                            fontSize: 21,
+                            fontFamily: 'Lobster',
+                            fontSize: 31,
                             color: Colors.white,
                             fontWeight: FontWeight.bold))),
                 const Padding(
                     padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
-                    child: Text("\"Para começar, pare de falar e comece a fazer.\" (Walt Disney)",
+                    child: Text(
+                        "Se planeje para tirar os sonhos do papel com nosso app",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,))),
+                          fontSize: 18,
+                          color: Colors.white,
+                        ))),
                 Expanded(
                     child: ListView.separated(
                   itemCount: objetivos.length,
@@ -80,6 +83,7 @@ class _ObjetivosListaPageState extends State<ObjetivosListaPage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Color.fromARGB(255, 247, 162, 169),
           onPressed: () async {
             bool? objetivoCadastrado = await Navigator.of(context)
                 .pushNamed('/objetivos-cadastro') as bool?;
