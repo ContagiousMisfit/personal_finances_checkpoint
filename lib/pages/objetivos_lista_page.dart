@@ -2,6 +2,7 @@ import 'package:financas_pessoais/components/objetivo_list_item.dart';
 import 'package:financas_pessoais/models/objetivo.dart';
 import 'package:financas_pessoais/repository/objetivo_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class ObjetivosListaPage extends StatefulWidget {
   const ObjetivosListaPage({Key? key}) : super(key: key);
@@ -72,7 +73,34 @@ class _ObjetivosListaPageState extends State<ObjetivosListaPage> {
                   itemCount: objetivos.length,
                   itemBuilder: (context, index) {
                     final objetivo = objetivos[index];
-                    return ObjetivoListItem(objetivo: objetivo);
+                    //return ObjetivoListItem(objetivo: objetivo);
+                    return Slidable(
+                  endActionPane: ActionPane(
+                    motion: const ScrollMotion(),
+                    children: [
+                      SlidableAction(
+                        onPressed: (context) async {
+                          await _objetivoRepository
+                              .desativarObjetivo(objetivo.id!);
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content:
+                                      Text('Objetivo desativado com sucesso')));
+
+                          setState(() {
+                            objetivos.removeAt(index);
+                          });
+                        },
+                        backgroundColor: Colors.red,
+                        foregroundColor: Colors.white,
+                        icon: Icons.delete,
+                        label: 'Remover',
+                      ),
+                    ],
+                  ),
+                  child: ObjetivoListItem(objetivo: objetivo),
+                );
                   },
                   separatorBuilder: (context, index) => const Divider(),
                 ))

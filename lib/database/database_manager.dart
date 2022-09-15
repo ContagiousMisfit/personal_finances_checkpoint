@@ -66,6 +66,16 @@ class DatabaseManager {
       'categoriaIcone': 'money',
       'categoriaTipoTransacao': 1
     });
+
+   await db.insert('objetivos', {
+      'nome': 'Intercâmbio no Canadá',
+      'valorNecessario': 15000,
+      'dataLimite': 1662940800000,
+      'fraseMotivacao': 'Você está mais perto que ontem e mais distante que amanhã!',
+      'imagem': 'viagem',
+      'tipo': 0
+    });
+    
   }
 
   String get _categorias => '''
