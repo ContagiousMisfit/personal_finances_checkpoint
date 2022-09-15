@@ -41,8 +41,29 @@ class ObjetivoRepository {
       "dataLimite": objetivo.dataLimite.millisecondsSinceEpoch,
       "fraseMotivacao": objetivo.fraseMotivacao,
       "imagem": objetivo.imagem,
-      "tipo": objetivo.tipo.index,
+      "tipo": objetivo.tipo.index
     });
   }
 
+  Future<void> desativarObjetivo(int id) async {
+    final db = await DatabaseManager().getDatabase();
+    await db.delete('objetivos', where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<int> editarObjetivo(Objetivo objetivo) async {
+    final db = await DatabaseManager().getDatabase();
+    return db.update(
+        'transacoes',
+        {
+          "id": objetivo.id,
+          "nome": objetivo.nome,
+          "valorNecessario": objetivo.valorNecessario,
+          "dataLimite": objetivo.dataLimite.millisecondsSinceEpoch,
+          "fraseMotivacao": objetivo.fraseMotivacao,
+          "imagem": objetivo.imagem,
+          "tipo": objetivo.tipo.index
+        },
+        where: 'id = ?',
+        whereArgs: [objetivo.id]);
+  }
 }

@@ -4,7 +4,7 @@ import 'package:sqflite/sqflite.dart';
 class DatabaseManager {
   Future<Database> getDatabase() async {
     final path = join(await getDatabasesPath(), 'financas.db');
-    return openDatabase(path, version: 2, onCreate: _onCreate);
+    return openDatabase(path, version: 1, onCreate: _onCreate);
   }
 
   _onCreate(Database db, int version) async {
@@ -66,14 +66,6 @@ class DatabaseManager {
       'categoriaIcone': 'money',
       'categoriaTipoTransacao': 1
     });
-    await db.insert('objetivos', {
-      'nome': 'Intercâmbio no Canadá',
-      'valorNecessario': '15000,00',
-      'dataLimite': '23/12/2022',
-      'fraseMotivacao': '',
-      'imagem': 'viagem',
-      'tipo': 'viagem'
-    });
   }
 
   String get _categorias => '''
@@ -107,7 +99,7 @@ class DatabaseManager {
       dataLimite INTEGER,
       fraseMotivacao TEXT,
       imagem TEXT, 
-      tipo INTEGER,
+      tipo INTEGER
     );
   ''';
 }
